@@ -1,0 +1,24 @@
+From 56f38294284ff2ca05205ebe3b4af8b035b99c5d Mon Sep 17 00:00:00 2001
+From: Eugene Mutavchi <Ievgen_Mutavchi@comcast.com>
+Date: Tue, 20 May 2025 19:42:28 +0000
+Subject: [PATCH] Fix decodebin3 caps leak
+
+---
+ gst/playback/gstdecodebin3.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/gst/playback/gstdecodebin3.c b/gst/playback/gstdecodebin3.c
+index f2614a4..9388978 100644
+--- a/gst/playback/gstdecodebin3.c
++++ b/gst/playback/gstdecodebin3.c
+@@ -654,6 +654,8 @@ gst_decodebin3_dispose (GObject * object)
+   g_list_free (dbin->to_activate);
+   g_list_free (dbin->pending_select_streams);
+   g_clear_object (&dbin->collection);
++  if (dbin->caps)
++    gst_caps_unref (dbin->caps);
+ 
+   free_input (dbin, dbin->main_input);
+ 
+-- 
+2.25.1
