@@ -10,6 +10,7 @@ inherit ptest
 
 RDEPENDS:${PN}-ptest += "bash"
 
+PACKAGES = "${PN}"
 do_compile_ptest() {
     # update DATADIR in Makefile
     sed -i 's,-DDATADIR=.*,-DDATADIR=\\\"${PTEST_PATH}/tests\\\" \\,g' ${B}/tests/libkeymap/Makefile
@@ -93,3 +94,5 @@ do_install_ptest() {
     # update PTEST_PATH in run-ptest
     sed -i "s#@PTEST_PATH@#${PTEST_PATH}#g" ${D}${PTEST_PATH}/run-ptest
 }
+PACKAGE_DEBUG_SPLIT_STYLE:wrynose = "debug-without-src"
+INSANE_SKIP:${PN} += "installed-vs-shipped"

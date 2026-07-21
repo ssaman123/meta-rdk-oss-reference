@@ -36,3 +36,4 @@ do_configure:prepend() {
     sed -i 's/i_ndbm=define/i_ndbm=undef/g' ${S}/hints/linux.sh || true
     sed -i 's/i_dbm=define/i_dbm=undef/g' ${S}/hints/linux.sh || true
 }
+CFLAGS:append = " -DNDBM_H_USES_PROTOTYPES"
