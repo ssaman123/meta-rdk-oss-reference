@@ -88,5 +88,10 @@ do_install:append () {
 	oe_libinstall -so -C shlib libhistory ${D}${libdir}
 	oe_libinstall -so -C shlib libreadline ${D}${libdir}
 }
-
+CFLAGS:append:wrynose = " \
+    -Wno-error=implicit-function-declaration \
+    -Wno-error=incompatible-pointer-types \
+"
+CFLAGS:append:wrynose = " -fpermissive"
+CFLAGS:append:wrynose = " -std=gnu89"
 BBCLASSEXTEND = "native nativesdk"
